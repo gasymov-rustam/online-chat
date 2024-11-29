@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FullStack",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "start-frontend",
+            "program": "${workspaceFolder}/src/Server/ChatApp.API/bin/Debug/net8.0/ChatApp.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Server/ChatApp.API",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "API Only",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Server/ChatApp.API/bin/Debug/net8.0/ChatApp.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Server/ChatApp.API",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "API"
+            }
+        }
+    ]
+}

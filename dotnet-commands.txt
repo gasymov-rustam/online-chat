@@ -1,0 +1,111 @@
+# .NET CLI Популярные команды
+
+### Решение (Solution) и Проекты
+# Создание нового решения
+dotnet new sln -n MySolution
+
+# Создание проекта
+dotnet new webapi -n MyApi                  # WebAPI проект
+dotnet new classlib -n MyLibrary            # Библиотека классов
+dotnet new console -n MyConsole             # Консольное приложение
+dotnet new xunit -n MyTests                 # xUnit тесты
+
+# Добавление проекта в решение
+dotnet sln MySolution.sln add ./src/MyApi/MyApi.csproj
+dotnet sln MySolution.sln add **/*.csproj   # Добавить все проекты
+
+# Удаление проекта из решения
+dotnet sln MySolution.sln remove ./src/MyApi/MyApi.csproj
+
+# Добавление ссылки на проект
+dotnet add MyApi/MyApi.csproj reference MyLibrary/MyLibrary.csproj
+
+# Удаление ссылки на проект
+dotnet remove MyApi/MyApi.csproj reference MyLibrary/MyLibrary.csproj
+
+
+### Зависимости (NuGet)
+# Установка пакета
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore --version 7.0.0
+
+# Удаление пакета
+dotnet remove package Microsoft.EntityFrameworkCore
+
+# Обновление пакетов
+dotnet restore                              # Восстановить все пакеты
+dotnet restore MyApi/MyApi.csproj           # Для конкретного проекта
+
+
+### Сборка и Запуск
+# Сборка
+dotnet build                                # Собрать всё решение
+dotnet build MyApi/MyApi.csproj             # Собрать конкретный проект
+dotnet build --configuration Release        # Релизная сборка
+
+# Запуск
+dotnet run --project MyApi/MyApi.csproj     # Запуск конкретного проекта
+dotnet run --no-build                       # Запуск без пересборки
+dotnet run --launch-profile "Development"   # С конкретным профилем
+
+# Публикация
+dotnet publish -c Release -o ./publish      # Публикация в папку
+dotnet publish --self-contained             # Автономная публикация
+
+
+### Entity Framework Migrations
+# Установка инструментов EF
+dotnet tool install --global dotnet-ef
+
+# Добавление миграции
+dotnet ef migrations add InitialCreate -p MyApi/MyApi.csproj
+dotnet ef migrations add AddUserTable --context MyDbContext
+
+# Применение миграций
+dotnet ef database update -p MyApi/MyApi.csproj
+dotnet ef database update AddUserTable      # До конкретной миграции
+
+# Откат миграций
+dotnet ef database update 0                 # Откатить все миграции
+dotnet ef database update InitialCreate     # Откатить до конкретной миграции
+
+# Удаление последней миграции
+dotnet ef migrations remove
+
+# Генерация скрипта
+dotnet ef migrations script                 # Для всех миграций
+dotnet ef migrations script InitialCreate AddUserTable  # Между миграциями
+
+
+### Тестирование
+# Запуск тестов
+dotnet test                                 # Все тесты
+dotnet test MyTests/MyTests.csproj          # Конкретный проект
+dotnet test --filter "Category=Unit"        # С фильтром
+dotnet test --collect:"XPlat Code Coverage" # С покрытием кода
+
+
+### Дополнительные команды
+# Очистка
+dotnet clean                                # Очистить все артефакты сборки
+
+# Информация
+dotnet --info                               # Информация о SDK
+dotnet --version                            # Версия .NET
+
+# Список шаблонов
+dotnet new list                             # Все доступные шаблоны
+
+# Форматирование кода
+dotnet format                               # Форматировать весь код
+
+
+### Полезные опции
+--verbosity <level>     # Уровень детализации (q[uiet], m[inimal], n[ormal], d[etailed], diag[nostic])
+--no-restore           # Пропустить восстановление пакетов
+--force               # Принудительное выполнение
+-v|--verbose         # Подробный вывод
+
+# Справка по командам
+dotnet new --help
+dotnet ef --help

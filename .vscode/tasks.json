@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Server/ChatApp.API/ChatApp.API.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "start-frontend",
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "dev"],
+            "options": {
+                "cwd": "${workspaceFolder}/src/Client"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*VITE.*",
+                    "endsPattern": "^.*Local.*"
+                }
+            }
+        },
+        {
+            "label": "start-fullstack",
+            "dependsOn": ["start-frontend"],
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/src/Server/ChatApp.API/ChatApp.API.csproj",
+                "--launch-profile",
+                "FullStack"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
